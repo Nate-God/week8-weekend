@@ -51,7 +51,7 @@ class User {
         const updatedCart = this._cart.filter(cartItem => cartItem.item.id !== item.id);
         this._cart = updatedCart;
     }
-    removeQuantityFromCart(item, quantity) {
+    removeCartQuantity(item, quantity) {
         const index = this._cart.findIndex(cartItem => cartItem.item.id === item.id);
         if (index !== -1) {
             this._cart[index].quantity -= quantity;
@@ -91,12 +91,8 @@ class Shop {
         });
     }
 }
-function createUser(name, age, cart = []) {
-    return new User((0, uuid_1.v4)(), name, age, cart);
-}
-function createItem(name, price, description) {
-    return new Item(name, price, description);
-}
+function createUser(name, age, cart = []) { return new User((0, uuid_1.v4)(), name, age, cart); }
+function createItem(name, price, description) { return new Item(name, price, description); }
 function cartTotal(user) {
     let total = 0;
     for (const cartItem of user.cart) {
@@ -122,10 +118,7 @@ const shop = new Shop([]);
 shop.addToStock(itemA, 10);
 shop.addToStock(itemB, 11);
 shop.addToStock(itemC, 12);
-console.log('Initial Shop Stock:');
-shop.stock.forEach((stockItem) => {
-    console.log(`Name: ${stockItem.item.name}, Description: ${stockItem.item.description}, Quantity: ${stockItem.quantity}`);
-});
+shop.logStock();
 console.log("Adding items to the cart:");
 user.addToCart(itemA, 1, shop);
 user.addToCart(itemB, 3, shop);
@@ -138,6 +131,6 @@ user.removeFromCart(itemB);
 printCart(user);
 shop.logStock();
 console.log("Removing 2 instances of Item C from the cart:");
-user.removeQuantityFromCart(itemC, 2);
+user.removeCartQuantity(itemC, 2);
 printCart(user);
 shop.logStock();

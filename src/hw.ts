@@ -49,17 +49,12 @@ class User {
     addToCart(item: Item, quantity: number, shop: Shop): void {
         const availableQuantity = shop.sellItem(item, quantity);
 
-        if (availableQuantity) {
+        if (availableQuantity) { 
             const existingIndex = this._cart.findIndex(cartItem => cartItem.item.id === item.id);
 
-            if (existingIndex !== -1) {
-                this._cart[existingIndex].quantity += quantity;
-            } else {
-                this._cart.push({ item, quantity });
-            }
-        } else {
-            console.log(`Not enough stock for ${item.name}!`);
-        }
+            if (existingIndex !== -1) { this._cart[existingIndex].quantity += quantity;
+            } else { this._cart.push({ item, quantity }); }
+        } else { console.log(`Not enough stock for ${item.name}!`); }
     }
 
     removeFromCart(item: Item): void {
@@ -72,10 +67,7 @@ class User {
 
         if (index !== -1) {
             this._cart[index].quantity -= quantity;
-
-            if (this._cart[index].quantity <= 0) {
-                this._cart.splice(index, 1);
-            }
+            if (this._cart[index].quantity <= 0) { this._cart.splice(index, 1); }
         }
     }
 }
@@ -93,11 +85,8 @@ class Shop {
     addToStock(item: Item, quantity: number): void {
         const existingItemIndex = this._stock.findIndex(stockItem => stockItem.item.id === item.id);
 
-        if (existingItemIndex !== -1) {
-            this._stock[existingItemIndex].quantity += quantity;
-        } else {
-            this._stock.push({ item, quantity });
-        }
+        if (existingItemIndex !== -1) { this._stock[existingItemIndex].quantity += quantity;
+        } else { this._stock.push({ item, quantity }); }
     }
 
     sellItem(item: Item, quantity: number): boolean {
@@ -119,13 +108,9 @@ class Shop {
     }
 }
 
-function createUser(name: string, age: number, cart: { item: Item, quantity: number }[] = []): User {
-    return new User(uuidv4(), name, age, cart);
-}
+function createUser(name: string, age: number, cart: { item: Item, quantity: number }[] = []): User { return new User(uuidv4(), name, age, cart); }
 
-function createItem(name: string, price: number, description: string): Item {
-    return new Item(name, price, description);
-}
+function createItem(name: string, price: number, description: string): Item { return new Item(name, price, description);}
 
 function cartTotal(user: User): number {
     let total = 0;
