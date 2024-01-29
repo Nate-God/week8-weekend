@@ -61,7 +61,7 @@ class User {
         const updatedCart = this._cart.filter(cartItem => cartItem.item.id !== item.id);
         this._cart = updatedCart;
     }
-
+// cart items don't go back to the shop after removing, sure hope someone gets fired for this
     removeCartQuantity(item: Item, quantity: number): void {
         const index = this._cart.findIndex(cartItem => cartItem.item.id === item.id);
 
@@ -107,6 +107,7 @@ class Shop {
         });
     }
 }
+
 
 function createUser(name: string, age: number, cart: { item: Item, quantity: number }[] = []): User { return new User(uuidv4(), name, age, cart); }
 
